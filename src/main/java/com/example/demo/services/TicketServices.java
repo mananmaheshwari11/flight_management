@@ -3,6 +3,7 @@ package com.example.demo.services;
 import com.example.demo.dto.*;
 import com.example.demo.repository.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -21,11 +22,13 @@ public class TicketServices {
     @Autowired
     public RestTemplate restTemplate;
 
-    String user_url="http://localhost:9055/flight-mgmt/users/";
-    String flight_url="http://localhost:9056/flight-mgmt/flights/";
+    @Value("${user.service.url}")
+    private  String user_url;
+
+    @Value("${flight.service.url}")
+    private String flight_url;
 
     public ResponseEntity<TicketInfo> addTicket(Long flight_id, Long user_id) {
-            System.out.println("Hey user ticket add started");
             ResponseEntity<UserInfo> userInfo = restTemplate.getForEntity(user_url+user_id, UserInfo.class);
             if(!(userInfo.getStatusCode() == HttpStatus.OK)){
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
