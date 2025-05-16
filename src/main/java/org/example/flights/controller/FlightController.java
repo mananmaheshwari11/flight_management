@@ -35,7 +35,6 @@ public class FlightController {
         @RequestParam(required = false) Long id,
         @RequestParam(required = false) String source,
         @RequestParam(required = false) String destination,
-//        @RequestParam(required = false) String query,
         @RequestParam(required = false) String date
     ){
 
